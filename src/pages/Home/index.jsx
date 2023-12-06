@@ -30,26 +30,26 @@ export function Home() {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      async function fetchPokemon() {
-        const response = await api
-          .get(`/pokemon/${searchNamePokemon}`)
-          .then((response) => {
-            setImagePokemon(response.data.sprites.front_default);
-            setIdPokemon(response.data.id);
-            setNamePokemon(response.data.name);
-            return response;
-          })
-          .catch((error) => {
-            if (error.response.status === 404) {
-              setNamePokemon("Não encontrado");
-              setIdPokemon("");
-              setImagePokemon(null);
-            }
-          });
-      }
-      fetchPokemon();
-    }, 1000);
+    async function fetchPokemon() {
+      const response = await api
+        .get(`/pokemon/${searchNamePokemon}`)
+        .then((response) => {
+          setImagePokemon(response.data.sprites.front_default);
+          setIdPokemon(response.data.id);
+          setNamePokemon(response.data.name);
+          return response;
+        })
+        .catch((error) => {
+          if (error.response.status === 404) {
+            setNamePokemon("Não encontrado");
+            setIdPokemon("");
+            setImagePokemon(null);
+          }
+        });
+
+      return response;
+    }
+    fetchPokemon();
   }, [searchNamePokemon]);
 
   return (
