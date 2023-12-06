@@ -13,8 +13,8 @@ export const Pokedex = styled.div`
   .image-pokemon {
       position: absolute;
       top: 16.5rem;
-      left: 10.5rem;
-      width: 20rem;
+      left: 11.5rem;
+      width: 17rem;
   }
 
   .name-pokemon {
