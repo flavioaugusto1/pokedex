@@ -8,8 +8,8 @@ import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 
 export function Home() {
+  const [search, setSearchPokemon] = useState("bulbasaur");
   const [idPokemon, setIdPokemon] = useState("");
-  const [searchNamePokemon, setsearchNamePokemon] = useState("bulbasaur");
   const [namePokemon, setNamePokemon] = useState("");
   const [imagePokemon, setImagePokemon] = useState(null);
 
@@ -31,26 +31,24 @@ export function Home() {
 
   useEffect(() => {
     async function fetchPokemon() {
-      const response = await api
-        .get(`/pokemon/${searchNamePokemon}`)
-        .then((response) => {
-          setImagePokemon(response.data.sprites.front_default);
-          setIdPokemon(response.data.id);
-          setNamePokemon(response.data.name);
-          return response;
-        })
-        .catch((error) => {
-          if (error.response.status === 404) {
-            setNamePokemon("Não encontrado");
-            setIdPokemon("");
-            setImagePokemon(null);
-          }
-        });
+      try {
+        const response = await api.get(`/pokemon/${search.toLowerCase()}`);
 
-      return response;
+        setImagePokemon(response.data.sprites.front_default);
+        setIdPokemon(response.data.id);
+        setNamePokemon(response.data.name);
+        return;
+      } catch (error) {
+        if (error.response.status === 404) {
+          setNamePokemon("...não localizado");
+          setIdPokemon("");
+          setImagePokemon(null);
+        }
+      }
     }
+
     fetchPokemon();
-  }, [searchNamePokemon]);
+  }, [search]);
 
   return (
     <Container>
@@ -70,7 +68,7 @@ export function Home() {
           <span>{namePokemon}</span>
         </div>
 
-        <Input onChange={(e) => setsearchNamePokemon(e.target.value)} />
+        <Input onChange={(e) => setSearchPokemon(e.target.value)} />
 
         <div className="buttons">
           <Button title="Anterior" onClick={handlePreviousPokemon} />
