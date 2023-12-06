@@ -10,17 +10,40 @@ export const Container = styled.div`
 export const Pokedex = styled.div`
   position: relative;
 
+  .image-pokemon {
+      position: absolute;
+      top: 16.5rem;
+      left: 10.5rem;
+      width: 20rem;
+  }
+
   .name-pokemon {
     position: absolute;
-    top: 36rem;
+    top: 35.5rem;
     right: 11rem;
 
     > span {
-      font-size: 1.8rem;
+      font-size: 2.4rem;
+      font-weight: bold;
+      &:nth-child(1) {
+        color: ${({ theme }) => theme.COLORS.GRAY_200};
+      }
     }
+  }
 
-    &:nth-child(1) {
-      
-    }
+  input {
+    position: absolute;
+    top: 45.5rem;
+    right: 10.5rem;
+  }
+
+  .buttons {
+    width: 30rem;
+    position: absolute;
+    display: flex;
+    gap: 2rem;
+
+    top: 55.5rem;
+    right: 8rem;
   }
 `;
